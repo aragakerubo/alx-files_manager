@@ -14,6 +14,8 @@ router.get('/connect', AuthController.getConnect); // Login endpoint
 router.get('/disconnect', AuthController.getDisconnect); // Logout endpoint
 router.get('/users/me', UsersController.getMe); // Get current user endpoint
 router.post('/files', FilesController.postUpload); // Upload file endpoint
+router.get('/files/:id', FilesController.getShow); // Get file endpoint
+router.get('/files', FilesController.getIndex); // Get file endpoint
 
 // Export the router so it can be used in the server
 export default router;
