@@ -99,8 +99,8 @@ class FilesController {
       };
 
       const fileId = await dbClient.createFile(newFile);
-      newFile.id = fileId;  // Add the ID for the response
-      delete newFile._id;   // Ensure _id is not included in the response
+      newFile.id = fileId; // Add the ID for the response
+      delete newFile._id; // Ensure _id is not included in the response
 
       // Return the newly created file
       return res.status(201).json(newFile);
