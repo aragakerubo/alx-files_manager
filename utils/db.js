@@ -16,6 +16,8 @@ const { DB_HOST, DB_PORT, DB_DATABASE } = {
  * @method isAlive() Check if the connection is established
  * @method nbUsers() Get the number of documents in the users collection
  * @method nbFiles() Get the number of documents in the files collection
+ * @method getUserByEmail(email) Get user by email
+ * @method createUser(user) Create a new user
  */
 class DBClient {
   constructor() {
@@ -69,6 +71,27 @@ class DBClient {
       return await this.db.collection('files').countDocuments();
     } catch (error) {
       console.error(`Error fetching files count: ${error.message}`);
+      return 0;
+    }
+  }
+
+  async getUserByEmail(email) {
+    if (!this.db) return 0;
+    try {
+      return await this.db.collection('users').findOne({ email });
+    } catch (error) {
+      console.error(`Error fetching user by email: ${error.message}`);
+      return 0;
+    }
+  }
+
+  async createUser(user) {
+    if (!this.db) return 0;
+    try {
+      const result = await this.db.collection('users').insertOne(user);
+      return { _id: result.ops[0]._id, email: result.ops[0].email };
+    } catch (error) {
+      console.error(`Error creating user: ${error.message}`);
       return 0;
     }
   }
