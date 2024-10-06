@@ -18,8 +18,13 @@ class AuthController {
       const credentials = Buffer.from(
         base64Credentials,
         'base64',
-      ).toString('ascii');
+      ).toString('utf-8');
       const [email, password] = credentials.split(':');
+
+      // Check if the email and password are provided
+      if (!email || !password) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
 
       // Hash the password using SHA1
       const hashedPassword = crypto
