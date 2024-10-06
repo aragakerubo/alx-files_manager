@@ -108,6 +108,31 @@ class DBClient {
       return 0;
     }
   }
+
+  // Upload a new file or folder to the DB
+  async createFile(data) {
+    if (!this.db) return 0;
+    try {
+      const result = await this.db.collection('files').insertOne(data);
+      return result.insertedId;
+    } catch (error) {
+      console.error(`Error creating file: ${error.message}`);
+      return 0;
+    }
+  }
+
+  // Get file by id
+  async getFileById(fileId) {
+    if (!this.db) return 0;
+    try {
+      return await this.db
+        .collection('files')
+        .findOne({ _id: new ObjectId(fileId) });
+    } catch (error) {
+      console.error(`Error fetching file by id: ${error.message}`);
+      return 0;
+    }
+  }
 }
 
 const dbClient = new DBClient();
