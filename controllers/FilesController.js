@@ -128,13 +128,9 @@ class FilesController {
       // Get the file by ID
       const fileId = req.params.id;
       const file = await dbClient.getFileById(fileId);
-      if (!file) {
+      // Check if the file exists and if the file belongs to the user
+      if (!file || file.userId.toString() !== userId) {
         return res.status(404).json({ error: 'Not found' });
-      }
-
-      // Check if the file belongs to the user
-      if (file.userId.toString() !== userId) {
-        return res.status(403).json({ error: 'Forbidden' });
       }
 
       // Remove _id from the file object

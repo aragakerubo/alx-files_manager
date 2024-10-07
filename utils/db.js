@@ -142,7 +142,7 @@ class DBClient {
         userId,
         // parentId: parentId,
       };
-      if (parentId !== 0) {
+      if (parentId !== 0 && parentId !== '0') {
         matches.parentId = parentId;
       }
       const files = await this.db
