@@ -132,8 +132,8 @@ class FilesController {
         return res.status(404).json({ error: 'Not found' });
       }
 
-      // Check if the file is public or belongs to the user
-      if (!file.isPublic && file.userId.toString() !== userId) {
+      // Check if the file belongs to the user
+      if (file.userId.toString() !== userId) {
         return res.status(403).json({ error: 'Forbidden' });
       }
 
